@@ -76,6 +76,7 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
       "cortex-a55",
       "cortex-a75",
       "cortex-a76",
+      "cortex-a720",
       "exynos-m1",
       "exynos-m2",
       "exynos-m3",
@@ -88,6 +89,7 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
       "cortex-a55",
       "cortex-a75",
       "cortex-a76",
+      "cortex-a720",
       "kryo385",
       "kryo785",
   };
@@ -96,6 +98,7 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
       "cortex-a55",
       "cortex-a75",
       "cortex-a76",
+      "cortex-a720",
       "kryo385",
       "kryo785",
   };
@@ -104,6 +107,11 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
       "cortex-a55",
       "cortex-a75",
       "cortex-a76",
+      "cortex-a720",
+  };
+
+  static const char* arm64_variants_with_sve[] = {
+      "cortex-a720",
   };
 
   bool needs_a53_835769_fix = FindVariantInArray(arm64_variants_with_a53_835769_bug,
@@ -127,9 +135,9 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
   bool has_dotprod = FindVariantInArray(arm64_variants_with_dotprod,
                                         arraysize(arm64_variants_with_dotprod),
                                         variant);
-
-  // Currently there are no cpu variants which support SVE.
-  bool has_sve = false;
+  bool has_sve = FindVariantInArray(arm64_variants_with_sve,
+                                    arraysize(arm64_variants_with_sve),
+                                    variant);
 
   if (!needs_a53_835769_fix) {
     // Check to see if this is an expected variant. `other_arm64_known_variants` contains the
@@ -139,6 +147,7 @@ Arm64FeaturesUniquePtr Arm64InstructionSetFeatures::FromVariant(
         "cortex-a55",
         "cortex-a75",
         "cortex-a76",
+        "cortex-a720",
         "exynos-m1",
         "exynos-m2",
         "exynos-m3",
